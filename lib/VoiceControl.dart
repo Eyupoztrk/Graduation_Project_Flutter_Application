@@ -1,13 +1,16 @@
 import 'dart:io';
 import 'package:bitirme_projesi/Dialog.dart';
+import 'package:bitirme_projesi/TextTranslate.dart';
 import 'package:bitirme_projesi/text_to_speech.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:speech_to_text/speech_recognition_result.dart';
+import 'dart:ui' as ui;
 
 class VoiceControl{
   final stt.SpeechToText _speechToText = stt.SpeechToText();
   final Dialog dialog = Dialog();
   final text_to_speech textToSpeech = text_to_speech();
+  final TextTranslate textTranslate = TextTranslate();
 
 
 
@@ -20,18 +23,38 @@ class VoiceControl{
   }
 
   void startListening() async {
+    final targetLanguage = ui.window.locale.languageCode;
     await _speechToText.listen(
       onResult: onSpeechResult,
+      localeId: targetLanguage,
     );
   }
 
   void onSpeechResult(SpeechRecognitionResult result) {
     if (result.finalResult) {
-      String returnetMessage = dialog.getResponse(result.recognizedWords);
-      textToSpeech.speakText(returnetMessage);
-      print(result.recognizedWords);
+      SetEgText(result.recognizedWords);
+      //print(result.recognizedWords);
     }
   }
+
+
+  Future<void> SetEgText(String Text)
+  async {
+    String TranslatedText =  await textTranslate.translate_en(Text) ;
+    SetSpeakText(TranslatedText);
+  }
+
+  Future<void> SetSpeakText(String Text)
+  async {
+
+    String returnedMessage = dialog.getResponse(Text);
+    print(returnedMessage);
+    String TranslatedText =  await textTranslate.translate(returnedMessage) ;
+
+    textToSpeech.speakText(TranslatedText);
+  }
+
+
 
   void stopListening() async {
     await _speechToText.stop();

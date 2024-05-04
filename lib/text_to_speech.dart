@@ -10,15 +10,17 @@ class text_to_speech {
   Future<void> configureTts() async {
    // final targetLanguage = await Devicelocale.currentLocale;
     final targetLanguage = ui.window.locale.languageCode;
-    await flutterTts.setLanguage("en-US");
+    await flutterTts.setLanguage(targetLanguage);
     await flutterTts.setSpeechRate(2.0);
     await flutterTts.setVolume(1.0);
   }
 
   void speakText(String text) async {
-    final targetLanguage = await Devicelocale.currentLocale;
+    final targetLanguage = ui.window.locale.languageCode;
+    print(targetLanguage);
    // final targetLanguage = ui.window.locale.languageCode;
     //await flutterTts.setLanguage(targetLanguage!);
+    await flutterTts.setLanguage(targetLanguage);
    /* await flutterTts.setLanguage("tr-TR");
     await flutterTts.setSpeechRate(2.0);
     await flutterTts.setVolume(1.0);*/
