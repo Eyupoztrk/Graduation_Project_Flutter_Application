@@ -1,9 +1,14 @@
 import 'dart:io';
+import 'package:bitirme_projesi/Dialog.dart';
+import 'package:bitirme_projesi/text_to_speech.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:speech_to_text/speech_recognition_result.dart';
 
 class VoiceControl{
   final stt.SpeechToText _speechToText = stt.SpeechToText();
+  final Dialog dialog = Dialog();
+  final text_to_speech textToSpeech = text_to_speech();
+
 
 
   void initSpeech() async {
@@ -21,7 +26,11 @@ class VoiceControl{
   }
 
   void onSpeechResult(SpeechRecognitionResult result) {
-    print(result.recognizedWords);
+    if (result.finalResult) {
+      String returnetMessage = dialog.getResponse(result.recognizedWords);
+      textToSpeech.speakText(returnetMessage);
+      print(result.recognizedWords);
+    }
   }
 
   void stopListening() async {

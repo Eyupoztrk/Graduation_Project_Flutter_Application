@@ -3,10 +3,10 @@ import 'dart:io';
 class Dialog{
   String _botResponse = '';
 
-  String _getResponse(String message) {
-    if (message.toLowerCase().contains('Hello')) {
+  String getResponse(String message) {
+    if (message.toLowerCase().contains('hello')) {
       return 'Hi, how can I help you?';
-    } else if (message.toLowerCase().contains('Street')) {
+    } else if (message.toLowerCase().contains('normal') || message.toLowerCase().contains('street')) {
       return 'Street model opens';
     }
     else
