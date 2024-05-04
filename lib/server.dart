@@ -13,14 +13,42 @@ class Server {
   final TextTranslate textTranslate = TextTranslate();
 
   void connectServer() async {
-    //socket = await Socket.connect("4.234.179.119", 12346);
-   socket = await Socket.connect("192.168.1.3", 12346);
-    listenServer();
+    try {
+      //socket = await Socket.connect("4.234.179.119", 12346);
+      socket = await Socket.connect("192.168.1.2", 12346);
+      listenServer();
+    } catch (e) {
+      print('Bağlantı hatası: $e');
+    }
   }
-
   void sendToServer(String blob) {
     print('Sunucuya gönderildi: $blob' );
     socket.writeln(blob);
+  }
+
+  listenServer() async {
+    // Sunucudan gelen veriyi dinle
+
+    socket.listen(
+          (List<int> data) async {
+        String serverMessage = String.fromCharCodes(data);
+        print('Sunucudan gelen veri: $serverMessage');
+        String translatedTex = await textTranslate.translate(serverMessage);
+
+        print(translatedTex);
+        _speech.speakText(translatedTex);
+      },
+      onDone: () {
+        socket.destroy();
+      },
+      onError: (error) async {
+        print('Hatasss: $error');
+        String translatedTex = await textTranslate.translate("The connection has been destroyed, please reopen the application");
+        print(translatedTex);
+        _speech.speakText(translatedTex);
+      },
+      cancelOnError: true,
+    );
   }
 
   void disconnectServer() {
@@ -29,6 +57,12 @@ class Server {
       // Socket'i null olarak ayarla
     }
   }
+
+
+
+
+
+
 
     Future<void> connectServer2() async {
       try {
@@ -68,26 +102,6 @@ class Server {
       }
     }
 
-    listenServer() async {
-      // Sunucudan gelen veriyi dinle
 
-      socket.listen(
-            (List<int> data) async {
-          String serverMessage = String.fromCharCodes(data);
-          print('Sunucudan gelen veri: $serverMessage');
-          String translatedTex = await textTranslate.translate(serverMessage);
-
-          print(translatedTex);
-          _speech.speakText(translatedTex);
-        },
-        onDone: () {
-          socket.destroy();
-        },
-        onError: (error) {
-          print('Hata: $error');
-        },
-        cancelOnError: true,
-      );
-    }
   }
 

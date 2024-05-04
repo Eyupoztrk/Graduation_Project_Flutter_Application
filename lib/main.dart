@@ -1,12 +1,10 @@
-import 'package:bitirme_projesi/server.dart';
+import 'package:bitirme_projesi/VoiceControl.dart';
 import 'package:bitirme_projesi/TextTranslate.dart';
 import 'package:flutter/material.dart';
-import 'Application2.dart';
 import 'text_to_speech.dart';
 import 'Application.dart';
 import 'package:camera/camera.dart';
-import 'package:speech_to_text/speech_recognition_result.dart';
-import 'package:speech_to_text/speech_to_text.dart' as stt;
+
 
 late List<CameraDescription> cameras;
 
@@ -25,76 +23,27 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final stt.SpeechToText _speechToText = stt.SpeechToText();
+
   final TextTranslate textTranslate = TextTranslate();
-  text_to_speech t = text_to_speech();
-
-
-  final _speechEnabled = false;
-  String _lastWords = '';
-  String answerCommand = "";
-  bool isStarting = false;
-  final Server _server = Server();
+  final VoiceControl voiceControl = VoiceControl();
+  text_to_speech textToSpeech = text_to_speech();
 
 
   Future<void> SetSpeakText()
   async {
     String speakText = "Hello, welcome to the application. Long press the screen to identify object. Single press for street assistance";
     String TranslatedText =  await textTranslate.translate(speakText) ;
-    t.speakText(TranslatedText);
+    textToSpeech.speakText(TranslatedText);
   }
 
   @override
   void initState() {
     super.initState();
     SetSpeakText();
-    print("maine girdi");
-    _initSpeech();
-
-
-    _startListening();
+    voiceControl.initSpeech();
   }
 
-  void _initSpeech() async {
-    bool speechEnabled = await _speechToText.initialize();
 
-    if (!speechEnabled) {
-      print("The user has denied the use of speech recognition.");
-    }
-  }
-
-  void _startListening() async {
-    await _speechToText.listen(
-      onResult: _onSpeechResult,
-    );
-    setState(() {});
-  }
-
-  void CheckListening(String command) {
-    if (command.toLowerCase() == "Start") {
-
-      print("Uygulama başlatılıyor..");
-      //openOtherPage();
-      // başladıktan sonra yapılacak işlemler
-    }
-
-    _stopListening();
-  }
-
-  void _stopListening() async {
-    await _speechToText.stop();
-    setState(() {});
-  }
-
-  void _onSpeechResult(SpeechRecognitionResult result) {
-    setState(() {
-      _lastWords = result.recognizedWords;
-      //_command(_lastWords);
-      print(_lastWords);
-      // t.speakText(answerCommand);
-      //print(_lastWords);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,10 +87,11 @@ class _MyAppState extends State<MyApp> {
 
                 onPressed: () {
 
-                  Navigator.push(
+                  voiceControl.startListening();
+                  /*Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => CommandPage2(),),  );
+                      builder: (context) => CommandPage2(),),  );*/
 
                 },
                 child: const Text(
