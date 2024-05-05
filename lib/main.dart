@@ -1,6 +1,9 @@
+import 'dart:async';
 import 'package:bitirme_projesi/VoiceControl.dart';
 import 'package:bitirme_projesi/TextTranslate.dart';
 import 'package:flutter/material.dart';
+import 'package:bitirme_projesi/DialogApps.dart';
+import 'Application2.dart';
 import 'text_to_speech.dart';
 import 'Application.dart';
 import 'package:camera/camera.dart';
@@ -9,38 +12,63 @@ import 'package:camera/camera.dart';
 late List<CameraDescription> cameras;
 
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
   runApp(const MaterialApp(home: MyApp()));
-  
+
 }
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<MyApp> createState() => MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class MyAppState extends State<MyApp> {
+
 
   final TextTranslate textTranslate = TextTranslate();
   final VoiceControl voiceControl = VoiceControl();
   text_to_speech textToSpeech = text_to_speech();
+ // final DialogApps dialogApps =DialogApps();
 
 
   Future<void> SetSpeakText()
   async {
-    String speakText = "Hello, welcome to the application. Long press the screen to identify object. Single press for street assistance";
+    String speakText = "Welcome, just touch the screen once to give a voice command.";
     String TranslatedText =  await textTranslate.translate(speakText) ;
     textToSpeech.speakText(TranslatedText);
   }
-
+  late Timer _timer;
   @override
   void initState() {
     super.initState();
     SetSpeakText();
     voiceControl.initSpeech();
+  }
+
+  void openPage()
+  {
+    if(voiceControl.isAutomaticModel)
+      {
+        voiceControl.isAutomaticModel = false;
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CommandPage(),),  );
+      }
+    else
+      {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CommandPage2(),),  );
+      }
+
+
   }
 
 
@@ -75,19 +103,22 @@ class _MyAppState extends State<MyApp> {
 
 
                 onLongPress: () {
-                  Navigator.push(
+
+                  openPage();
+                  /*Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => CommandPage(),
                     ),
                   );
-                  // serverpost.sendToServer("merhaba");
+                  // serverpost.sendToServer("merhaba");*/
                 },
 
 
                 onPressed: () {
 
                   voiceControl.startListening();
+                  //textToSpeech.speakText("text");
                   /*Navigator.push(
                     context,
                     MaterialPageRoute(

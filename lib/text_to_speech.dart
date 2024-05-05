@@ -2,13 +2,15 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:devicelocale/devicelocale.dart';
 import 'dart:ui' as ui;
 
+import 'main.dart';
+
 
 class text_to_speech {
   FlutterTts flutterTts = FlutterTts();
+  //MyAppState mainn = new MyAppState();
   bool isSpeakComplete = false;
 
   Future<void> configureTts() async {
-   // final targetLanguage = await Devicelocale.currentLocale;
     final targetLanguage = ui.window.locale.languageCode;
     await flutterTts.setLanguage(targetLanguage);
     await flutterTts.setSpeechRate(2.0);
@@ -16,22 +18,25 @@ class text_to_speech {
   }
 
   void speakText(String text) async {
+    isSpeakComplete = false;
     final targetLanguage = ui.window.locale.languageCode;
     print(targetLanguage);
-   // final targetLanguage = ui.window.locale.languageCode;
-    //await flutterTts.setLanguage(targetLanguage!);
     await flutterTts.setLanguage(targetLanguage);
-   /* await flutterTts.setLanguage("tr-TR");
-    await flutterTts.setSpeechRate(2.0);
-    await flutterTts.setVolume(1.0);*/
     await flutterTts.speak(text);
+
     flutterTts.setCompletionHandler(() {
-      // Konuşma tamamlandığında yapılacak işlemleri burada tanımlayabilirsiniz.
-      final targetLanguage = ui.window.locale.languageCode;
 
       print('Konuşma tamamlandı.');
+      //mainn.openPage();
       isSpeakComplete = true;
     });
+
+  }
+
+  bool complete()
+  {
+
+    return isSpeakComplete;
   }
 
   void stopSpeaking() async {

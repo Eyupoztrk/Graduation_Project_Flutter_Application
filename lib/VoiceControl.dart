@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:bitirme_projesi/Dialog.dart';
+import 'package:bitirme_projesi/DialogApps.dart';
 import 'package:bitirme_projesi/TextTranslate.dart';
 import 'package:bitirme_projesi/text_to_speech.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
@@ -8,10 +8,10 @@ import 'dart:ui' as ui;
 
 class VoiceControl{
   final stt.SpeechToText _speechToText = stt.SpeechToText();
-  final Dialog dialog = Dialog();
+  final DialogApps dialog = DialogApps();
   final text_to_speech textToSpeech = text_to_speech();
   final TextTranslate textTranslate = TextTranslate();
-
+  bool isAutomaticModel = false;
 
 
   void initSpeech() async {
@@ -33,7 +33,6 @@ class VoiceControl{
   void onSpeechResult(SpeechRecognitionResult result) {
     if (result.finalResult) {
       SetEgText(result.recognizedWords);
-      //print(result.recognizedWords);
     }
   }
 
@@ -50,7 +49,7 @@ class VoiceControl{
     String returnedMessage = dialog.getResponse(Text);
     print(returnedMessage);
     String TranslatedText =  await textTranslate.translate(returnedMessage) ;
-
+    isAutomaticModel = dialog.isAutomaticModel;
     textToSpeech.speakText(TranslatedText);
   }
 
