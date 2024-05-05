@@ -6,6 +6,7 @@ import 'TextTranslate.dart';
 class DialogApps{
   final TextTranslate textTranslate = TextTranslate();
   bool isAutomaticModel = false;
+  late int modelNumber;
 
   List<String> entryList = [
     'Hello!',
@@ -47,6 +48,7 @@ class DialogApps{
     }
 
     else if (message.toLowerCase().contains('market') || message.toLowerCase().contains('shopping') || message.toLowerCase().contains('shop') ) {
+      modelNumber = 1;
       isAutomaticModel = false;
       return 'Shopping model selected, press and hold to enter';
     }

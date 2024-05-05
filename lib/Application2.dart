@@ -19,13 +19,20 @@ import 'dart:developer';
 import 'package:image/image.dart' as img;
 
 class CommandPage2 extends StatefulWidget {
-  const CommandPage2({super.key});
+//  const CommandPage2({super.key});
+
+  final int model; // Yeni değişken
+
+  const CommandPage2({Key? key, required this.model}) : super(key: key); // Constructor güncellendi
+
 
   @override
   State<CommandPage2> createState() => _commandPageState();
 }
 
 class _commandPageState extends State<CommandPage2> {
+
+
   late CameraController controller;
   Uint8List byteData = Uint8List.fromList([65, 66, 67, 68, 69]);
   final Server _server = Server();
@@ -44,9 +51,13 @@ class _commandPageState extends State<CommandPage2> {
     _speech.speakText(TranslatedText);
   }
 
+  late int _model;
+
   @override
   void initState() {
     super.initState();
+    _model = widget.model;
+    print(_model);
     controller = CameraController(cameras[0], ResolutionPreset.max);
     lastImage = Image.network("https://assets-us-01-tlsnext.kc-usercontent.com/ffacfe7d-10b6-0083-2632-604077fd4eca/c7a6925a-f88d-4e0f-92e8-9254f575209f/Senior-man-with-vision-loss-crossing-street_FB_iStock-1292075242_2021-05_1200x630.jpg");
     _server.connectServer();
