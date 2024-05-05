@@ -130,7 +130,11 @@ class _commandPageState extends State<CommandPage2> {
 
   void sendDataToServer(String base64code)
   {
-    _server.sendToServer(base64code +'\r');
+    if(_model == 4)
+      {
+        _server.sendToServer(base64code +'\r');
+      }
+
   }
 
 
