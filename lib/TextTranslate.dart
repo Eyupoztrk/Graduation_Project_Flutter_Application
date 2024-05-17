@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:ui' as ui;
 import 'package:deepl_dart/deepl_dart.dart';
@@ -13,9 +14,7 @@ class TextTranslate{
   Future<String> translate(String text) async {
     String apiKey = '90bcd743-2b29-4608-bc89-6482c4167c73:fx';
     var targetLanguage = ui.window.locale.languageCode;
-    print(targetLanguage);
     Translator translator = Translator(authKey: apiKey);
-
 
     if(targetLanguage == "en")
       {
@@ -28,6 +27,8 @@ class TextTranslate{
     translatedTextt = translatedText;
     return translatedText;
   }
+
+
 
   Future<String> translate_en(String text) async {
     String apiKey = '90bcd743-2b29-4608-bc89-6482c4167c73:fx';

@@ -42,11 +42,13 @@ class _commandPageState extends State<CommandPage2> {
   late XFile lastPicture;
   late Image lastImage;
   late String resultMessage ="Gelen Veriler Burada Görünecektir";
+  String speakText = "";
 
 
-  Future<void> SetSpeakText()
+  Future<void> SetSpeakText(String SpeakText)
   async {
-    String speakText = "This is the object asistance section.";
+   // speakText = "This is the object asistance section.";
+    speakText = SpeakText;
     String TranslatedText =  await textTranslate.translate(speakText) ;
     _speech.speakText(TranslatedText);
   }
@@ -59,9 +61,29 @@ class _commandPageState extends State<CommandPage2> {
     _model = widget.model;
     print(_model);
     controller = CameraController(cameras[0], ResolutionPreset.max);
-    lastImage = Image.network("https://assets-us-01-tlsnext.kc-usercontent.com/ffacfe7d-10b6-0083-2632-604077fd4eca/c7a6925a-f88d-4e0f-92e8-9254f575209f/Senior-man-with-vision-loss-crossing-street_FB_iStock-1292075242_2021-05_1200x630.jpg");
     _server.connectServer();
-    SetSpeakText();
+
+    if(_model == 2)
+      {
+        SetSpeakText("This is the fruit asistance section.");
+      }
+    else if(_model == 3)
+      {
+        SetSpeakText("This is the Color asistance section.");
+      }
+
+    else if(_model == 4)
+      {
+        SetSpeakText("This is the Text asistance section.");
+      }
+
+    else if(_model == 5)
+      {
+        SetSpeakText("This is the Money asistance section.");
+      }
+
+
+
     controller.initialize().then((_) {
       if (!mounted) {
         return;
@@ -96,9 +118,8 @@ class _commandPageState extends State<CommandPage2> {
 
     try {
       XFile file = await controller.takePicture();
-
-
       byteData = await file.readAsBytes();
+
       compressList(byteData);
 
     } catch (e) {
@@ -120,20 +141,36 @@ class _commandPageState extends State<CommandPage2> {
     print(list.length);
     Uint8List compressedBytes = await FlutterImageCompress.compressWithList(
       list,
-      minHeight: 250,
-      minWidth: 250,
-      quality: 90,
+      minHeight: 320,
+      minWidth: 240,
+      quality: 100,
     );
-    String base64code = base64Encode(compressedBytes);
+    String base64code = base64Encode(list);
    sendDataToServer(base64code);
   }
 
   void sendDataToServer(String base64code)
   {
-    if(_model == 4)
+    if(_model == 1)
       {
-        _server.sendToServer(base64code +'\r');
+        _server.sendToServer('\r' +'1'+base64code);
       }
+    else if(_model == 2)
+      {
+        _server.sendToServer('\r' +'2'+ base64code);
+      }
+    else if(_model == 3)
+      {
+        _server.sendToServer('\r' +'3'+ base64code);
+      }
+    else if(_model == 4)
+    {
+      _server.sendToServer('\r' +'4'+ base64code);
+    }
+    else if(_model == 5)
+    {
+      _server.sendToServer('\r' +'5'+ base64code);
+    }
 
   }
 

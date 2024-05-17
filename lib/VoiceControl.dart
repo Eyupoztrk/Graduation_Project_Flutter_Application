@@ -12,6 +12,7 @@ class VoiceControl{
   final text_to_speech textToSpeech = text_to_speech();
   final TextTranslate textTranslate = TextTranslate();
   bool isAutomaticModel = false;
+  int modelNumber =0;
 
 
   void initSpeech() async {
@@ -50,6 +51,7 @@ class VoiceControl{
     print(returnedMessage);
     String TranslatedText =  await textTranslate.translate(returnedMessage) ;
     isAutomaticModel = dialog.isAutomaticModel;
+    modelNumber = dialog.modelNumber;
     textToSpeech.speakText(TranslatedText);
   }
 

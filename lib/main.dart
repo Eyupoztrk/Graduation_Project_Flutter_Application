@@ -65,7 +65,7 @@ class MyAppState extends State<MyApp> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => CommandPage2(model: 4),),  );
+            builder: (context) => CommandPage2(model: voiceControl.modelNumber),),  );
       }
 
 

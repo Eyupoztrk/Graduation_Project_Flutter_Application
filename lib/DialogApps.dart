@@ -44,13 +44,29 @@ class DialogApps{
     }
     else if (message.toLowerCase().contains('normal') || message.toLowerCase().contains('street') || message.toLowerCase().contains('automatic') ) {
       isAutomaticModel = true;
+      modelNumber = 1;
       return 'Street model is selected, press and hold to enter';
     }
 
-    else if (message.toLowerCase().contains('market') || message.toLowerCase().contains('shopping') || message.toLowerCase().contains('shop') ) {
-      modelNumber = 1;
+    else if (message.toLowerCase().contains('fruit') ) {
+      modelNumber = 2;
       isAutomaticModel = false;
-      return 'Shopping model is selected, press and hold to enter';
+      return 'Fruit model is selected, press and hold to enter';
+    }
+    else if (message.toLowerCase().contains('color') ) {
+      modelNumber = 3;
+      isAutomaticModel = false;
+      return 'Color model is selected, press and hold to enter';
+    }
+    else if (message.toLowerCase().contains('text') ) {
+      modelNumber = 4;
+      isAutomaticModel = false;
+      return 'Text model is selected, press and hold to enter';
+    }
+    else if (message.toLowerCase().contains('money') ) {
+      modelNumber = 5;
+      isAutomaticModel = false;
+      return 'Money model is selected, press and hold to enter';
     }
     else
       return 'not understood';

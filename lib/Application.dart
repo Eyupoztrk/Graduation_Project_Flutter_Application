@@ -130,18 +130,15 @@ class _commandPageState extends State<CommandPage> {
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 162, 175, 221),
           title: const Text(
-            "SOKAK GÖRÜNÜMÜ YARDIMI",
+            "General Model",
             style: TextStyle(
                 color: Color.fromARGB(255, 255, 255, 255), fontSize: 18),
           ),
           centerTitle: true,
         ),
-        body: Center(
+        body: const Center(
           child: Column(children: [
-
-            const Text("VERILER BURADA GÖRÜNECEKTİR",textAlign: TextAlign.center, style: TextStyle(fontSize: 20),),
-
-              Text(resultMessage)
+            Text("Photo taking is automatic",textAlign: TextAlign.center, style: TextStyle(fontSize: 20),),
             ]
           ),
         )

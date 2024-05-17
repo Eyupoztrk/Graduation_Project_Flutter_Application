@@ -15,10 +15,11 @@ class Server {
   void connectServer() async {
     try {
       //socket = await Socket.connect("4.234.179.119", 12346);
-      socket = await Socket.connect("192.168.1.2", 12346);
+      socket = await Socket.connect("192.168.1.3", 12346);
+      //socket = await Socket.connect("192.168.217.120", 12346);
       listenServer();
     } catch (e) {
-      print('Bağlantı hatası: $e');
+      print('Bağlantı hatası : $e');
     }
   }
   void sendToServer(String blob) {
