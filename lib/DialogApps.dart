@@ -32,7 +32,10 @@ class DialogApps{
   String getResponse(String message) {
 
     if (message.toLowerCase().contains('hello') || message.toLowerCase().contains('hi') || message.toLowerCase().contains('hey')) {
+      isAutomaticModel = false;
+      modelNumber = 0;
       return  generateRandomResponse(entryList);
+
     }
     else if (message.toLowerCase().contains("how are you") ||
         message.toLowerCase().contains("how's it going") ||
@@ -40,33 +43,42 @@ class DialogApps{
         message.toLowerCase().contains("today") ||
         message.toLowerCase().contains("feeling") ||
         message.toLowerCase().contains("going")) {
+
+      isAutomaticModel = false;
+      modelNumber = 0;
       return generateRandomResponse(stateList);
     }
     else if (message.toLowerCase().contains('normal') || message.toLowerCase().contains('street') || message.toLowerCase().contains('automatic') ) {
       isAutomaticModel = true;
       modelNumber = 1;
-      return 'Street model is selected, press and hold to enter';
+      return 'You have selected the Street Assistance model, hold to enter';
     }
 
-    else if (message.toLowerCase().contains('fruit') ) {
+    else if (message.toLowerCase().contains('object') ) {
       modelNumber = 2;
       isAutomaticModel = false;
-      return 'Fruit model is selected, press and hold to enter';
+      return 'You have selected the object model, hold to enter';
     }
     else if (message.toLowerCase().contains('color') ) {
       modelNumber = 3;
       isAutomaticModel = false;
-      return 'Color model is selected, press and hold to enter';
+      return 'You have selected the color model, hold to enter';
     }
     else if (message.toLowerCase().contains('text') ) {
       modelNumber = 4;
       isAutomaticModel = false;
-      return 'Text model is selected, press and hold to enter';
+      return 'You have selected the text model, hold to enter';
     }
     else if (message.toLowerCase().contains('money') ) {
       modelNumber = 5;
       isAutomaticModel = false;
-      return 'Money model is selected, press and hold to enter';
+      return 'You have selected the money model, hold to enter';
+    }
+
+    else if (message.toLowerCase().contains('fruit') ) {
+      modelNumber = 6;
+      isAutomaticModel = false;
+      return 'You have selected the fruit model, hold to enter';
     }
     else
       return 'not understood';

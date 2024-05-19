@@ -105,15 +105,15 @@ class _commandPageState extends State<CommandPage> {
 
 
   Future<void> compressList(Uint8List list) async {
-    print(list.length);
+   /* print(list.length);
     Uint8List compressedBytes = await FlutterImageCompress.compressWithList(
       list,
       minHeight: 250,
       minWidth: 250,
       quality: 90,
-    );
+    );*/
 
-    String base64code = base64Encode(compressedBytes);
+    String base64code = base64Encode(list);
     sendDataToServer(base64code);
   }
 

@@ -50,9 +50,10 @@ class VoiceControl{
     String returnedMessage = dialog.getResponse(Text);
     print(returnedMessage);
     String TranslatedText =  await textTranslate.translate(returnedMessage) ;
+    textToSpeech.speakText(TranslatedText);
     isAutomaticModel = dialog.isAutomaticModel;
     modelNumber = dialog.modelNumber;
-    textToSpeech.speakText(TranslatedText);
+
   }
 
 

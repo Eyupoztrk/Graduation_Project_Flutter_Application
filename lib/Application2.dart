@@ -47,7 +47,6 @@ class _commandPageState extends State<CommandPage2> {
 
   Future<void> SetSpeakText(String SpeakText)
   async {
-   // speakText = "This is the object asistance section.";
     speakText = SpeakText;
     String TranslatedText =  await textTranslate.translate(speakText) ;
     _speech.speakText(TranslatedText);
@@ -65,21 +64,25 @@ class _commandPageState extends State<CommandPage2> {
 
     if(_model == 2)
       {
-        SetSpeakText("This is the fruit asistance section.");
+        SetSpeakText("This is the Object assistance section.");
       }
     else if(_model == 3)
       {
-        SetSpeakText("This is the Color asistance section.");
+        SetSpeakText("This is the Color assistance section.");
       }
 
     else if(_model == 4)
       {
-        SetSpeakText("This is the Text asistance section.");
+        SetSpeakText("This is the Text assistance section.");
       }
 
     else if(_model == 5)
       {
-        SetSpeakText("This is the Money asistance section.");
+        SetSpeakText("This is the Money assistance section.");
+      }
+    else if(_model == 6)
+      {
+        SetSpeakText("This is the Fruit assistance section.");
       }
 
 
@@ -138,13 +141,12 @@ class _commandPageState extends State<CommandPage2> {
 
 
   Future<void> compressList(Uint8List list) async {
-    print(list.length);
-    Uint8List compressedBytes = await FlutterImageCompress.compressWithList(
+   /* Uint8List compressedBytes = await FlutterImageCompress.compressWithList(
       list,
       minHeight: 320,
       minWidth: 240,
       quality: 100,
-    );
+    );*/
     String base64code = base64Encode(list);
    sendDataToServer(base64code);
   }
@@ -170,6 +172,10 @@ class _commandPageState extends State<CommandPage2> {
     else if(_model == 5)
     {
       _server.sendToServer('\r' +'5'+ base64code);
+    }
+    else if(_model == 6)
+    {
+      _server.sendToServer('\r' +'6'+ base64code);
     }
 
   }
