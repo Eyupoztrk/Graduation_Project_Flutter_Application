@@ -7,12 +7,12 @@ import 'package:deepl_dart/deepl_dart.dart';
 
 class TextTranslate{
 
-  static const _apiKey = '90bcd743-2b29-4608-bc89-6482c4167c73:fx';
+  static const _apiKey = '90bcd743-2b29-4608-bc89-';
   String translatedTextt = '';
 
 
   Future<String> translate(String text) async {
-    String apiKey = '90bcd743-2b29-4608-bc89-6482c4167c73:fx';
+    String apiKey = '90bcd743-2b29-4608-bc89-';
     var targetLanguage = ui.window.locale.languageCode;
     Translator translator = Translator(authKey: apiKey);
 
